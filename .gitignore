@@ -1,0 +1,13 @@
+.vs/*
+WebAPI/bin/*
+WebAPI/obj/*
+Models/bin/*
+Models/obj/*
+Application/bin/*
+Application/obj/*
+BlazorWASM/bin/*
+BlazorWASM/obj/*
+FileData/bin/*
+FileData/obj/*
+HttpClients/bin/*
+HttpClients/obj/*
