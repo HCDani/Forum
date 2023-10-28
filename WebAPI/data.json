@@ -1,0 +1,44 @@
+{
+  "Users": [
+    {
+      "UserName": "Jakob",
+      "Password": "Jelszo",
+      "Nickname": null,
+      "Id": 1
+    },
+    {
+      "UserName": "Alma",
+      "Password": "indulagorogaludni",
+      "Nickname": null,
+      "Id": 2
+    }
+  ],
+  "Posts": [
+    {
+      "Id": 1,
+      "Owner": {
+        "UserName": "Alma",
+        "Password": null,
+        "Nickname": null,
+        "Id": 2
+      },
+      "Title": "Alm\u00E1k",
+      "Body": "SOK ALMA",
+      "IsCompleted": false,
+      "Created": null
+    },
+    {
+      "Id": 2,
+      "Owner": {
+        "UserName": "Jakob",
+        "Password": null,
+        "Nickname": null,
+        "Id": 1
+      },
+      "Title": "Assignment2",
+      "Body": "We have to complete this today. Maybe tomorrow.",
+      "IsCompleted": false,
+      "Created": null
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+﻿@page "/CreatePost"
+@using HttpClients.ClientInterfaces
+@using Models
+@using Models.DTO
+@using UIComponents
+@inject IUserService userService
+@inject IPostService postService
+@inject NavigationManager navMgr
+@attribute [Authorize]
+<div class="card">
+    @if (users == null)
+    {
+        <label>Loading users...</label>
+    }
+    else if (!users.Any())
+    {
+        <label>No users, you cannot create a Post without assignee.</label>
+    }
+    else
+    {
+        <h3>Create a Post</h3>
+        <div class="form-group field">
+            <label>Title:</label>
+            <input type="text" @bind="postTitle" />
+        </div>
+        <div class="form-group field">
+            <label>Body:</label>
+            <input type="text" @bind="postBody" />
+        </div>
+        <div class="form-group field">
+            <label>Assignee:</label>
+            <select @bind="selectedUserId">
+                <option>Choose</option>
+                @foreach (User user in users)
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
+            </select>
+        </div>
+        <div class="button-row">
+            @if (!string.IsNullOrEmpty(msg))
+            {
+                <label style="color: red">@msg</label>
+            }
+            <button @onclick="Create" class="acceptbtn">Create</button>
+        </div>
+    }
+</div>
+<Modal ShowModal="showModal">
+    <p>You have successfully added a new Post. You should be very proud of yourself!</p>
+    <button @onclick="@Proceed">Wonderful</button>
+</Modal>
+
+@code {
+    private IEnumerable<User>? users;
+    private int? selectedUserId;
+    private string postTitle = "";
+    private string postBody = "";
+
+    private string msg = "";
+
+    private bool showModal;
+
+    private void Proceed()
+    {
+        showModal = false;
+        navMgr.NavigateTo("/ViewPosts");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            users = await userService.GetUsers();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+
+    private async Task Create()
+    {
+        msg = "";
+        if (selectedUserId == null)
+        {
+            msg = "You must select an assignee!";
+            return;
+        }
+        if (string.IsNullOrEmpty(postTitle))
+        {
+            msg = "Title cannot be empty!";
+            return;
+        }
+
+        try
+        {
+            PostCreationDto dto = new((int)selectedUserId, postTitle, postBody);
+            await postService.CreateAsync(dto);
+            showModal = true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+        selectedUserId = null;
+        postTitle = "";
+        msg = "Post created";
+    }
+}

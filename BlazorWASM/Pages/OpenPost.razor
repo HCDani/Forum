@@ -1,0 +1,40 @@
+﻿@page "/OpenPost/{id:int}"
+@using Models.DTO
+@using Models
+@using HttpClients.ClientInterfaces
+@using Microsoft.AspNetCore.Components
+@inject IPostService postService
+@inject NavigationManager navMgr
+@attribute [Authorize]
+
+<h1>@dto?.Title</h1>
+    <div>
+        <span>@dto?.Body</span>
+    </div>
+    <div>
+        <span>@dto?.OwnerName</span>
+    </div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private PostBasicDto dto = null!;
+    private string msg = "";
+    private IEnumerable<User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        msg = "";
+        try
+        {
+            dto = await postService.GetByIdAsync(Id);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+    }
+}
