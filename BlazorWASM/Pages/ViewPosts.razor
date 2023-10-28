@@ -15,15 +15,15 @@
         {
             <div class="filter">
                 <label>Username:</label>
-                <input type="text" @bind="usernameFilter" />
+                <input type="text" @bind="usernameFilter" @bind:after="OnInitializedAsync" />
             </div>
             <div class="filter">
                 <label>User id:</label>
-                <input type="number" @bind="userIdFilter" />
+                <input type="number" @bind="userIdFilter" @bind:after="OnInitializedAsync" />
             </div>
             <div class="filter">
                 <label>Title contains:</label>
-                <input type="text" @bind="titleContainsFilter" />
+                <input type="text" @bind="titleContainsFilter" @bind:after="OnInitializedAsync" />
             </div>
         }
     </div>
@@ -90,19 +90,6 @@ else
         try
         {
             posts = await postService.GetAsync(usernameFilter, userIdFilter,titleContainsFilter);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            msg = e.Message;
-        }
-    }
-    private async Task CompletePost(Post item)
-    {
-        PostUpdateDto dto = new(item.Id);
-        try
-        {
-            await postService.UpdateAsync(dto);
         }
         catch (Exception e)
         {

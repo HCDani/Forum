@@ -28,7 +28,8 @@ namespace Application.Logic
             ValidateData(dto);
             User toCreate = new User
             {
-                UserName = dto.UserName
+                UserName = dto.UserName,
+                Password = dto.Password
             };
 
             User created = await userDao.CreateAsync(toCreate);
@@ -45,6 +46,8 @@ namespace Application.Logic
 
             if (userName.Length > 15)
                 throw new Exception("Username must be less than 16 characters!");
+            if (userToCreate.Password.Length < 3)
+                throw new Exception("Passwprd must be at least 3 characters!");
         }
         public Task<IEnumerable<User>> GetAsync(SearchUserParametersDto searchParameters)
         {
