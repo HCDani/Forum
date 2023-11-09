@@ -9,10 +9,12 @@ namespace Models
 {
     public class Post
     {
+        [Key]
         public int Id { get; set; }
-        public User Owner { get; set; }
-        public string Title { get; set; }
-        public string Body { get; set; }
+        public User Owner { get; private set; }
+        public int OwnerId { get; set; }
+        public string Title { get; private set; }
+        public string Body { get; private set; }
 
         public Post(User owner, string Title, string Body)
         {
@@ -20,5 +22,6 @@ namespace Models
             this.Title = Title;
             this.Body = Body;
         }
+        private Post() { }
     }
 }

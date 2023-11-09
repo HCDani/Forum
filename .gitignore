@@ -11,3 +11,5 @@ FileData/bin/*
 FileData/obj/*
 HttpClients/bin/*
 HttpClients/obj/*
+EfcDataAccess/obj/*
+EfcDataAccess/bin/*
