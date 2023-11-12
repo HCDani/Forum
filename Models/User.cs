@@ -11,7 +11,6 @@ namespace Models
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-        public string Nickname { get; set; }
         public int Id { get; set; }
         [JsonIgnore]
         public ICollection<Post> Posts { get; set; }
