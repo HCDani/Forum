@@ -14,6 +14,11 @@ namespace EfcDataAccess.DAOs
     public class PostEfcDao : IPostDao
     {
         private readonly PostContext context;
+
+        public PostEfcDao(PostContext context)
+        {
+            this.context = context;
+        }
         public async Task<Post> CreateAsync(Post post)
         {
             EntityEntry<Post> added = await context.Posts.AddAsync(post);
@@ -35,7 +40,7 @@ namespace EfcDataAccess.DAOs
 
         public async Task<IEnumerable<Post>> GetAsync(SearchPostParametersDto searchParameters)
         {
-            IQueryable<Post> query = context.Posts.AsQueryable();
+            IQueryable<Post> query = context.Posts.Include(post => post.Owner).AsQueryable();
 
             if (!string.IsNullOrEmpty(searchParameters.Username))
             {

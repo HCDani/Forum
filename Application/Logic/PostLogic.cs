@@ -26,7 +26,7 @@ namespace Application.Logic
                 throw new Exception($"User with id {dto.OwnerId} was not found.");
             }
 
-            Post post = new Post(user, dto.Title, dto.Body);
+            Post post = new Post(user.Id, dto.Title, dto.Body);
             ValidatePost(post);
             Post created = await postDao.CreateAsync(post);
             return created;
@@ -60,7 +60,7 @@ namespace Application.Logic
             string titleToUse = dto.Title ?? existing.Title;
             string bodyToUse = dto.Body ?? existing.Body;
 
-            Post updated = new(userToUse, titleToUse, bodyToUse)
+            Post updated = new(userToUse.Id, titleToUse, bodyToUse)
             {
                 Id = existing.Id,
             };

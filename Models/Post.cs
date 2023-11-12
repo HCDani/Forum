@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Models
@@ -11,14 +12,15 @@ namespace Models
     {
         [Key]
         public int Id { get; set; }
+        [JsonInclude]
         public User Owner { get; private set; }
         public int OwnerId { get; set; }
         public string Title { get; private set; }
         public string Body { get; private set; }
 
-        public Post(User owner, string Title, string Body)
+        public Post(int ownerId, string Title, string Body)
         {
-            this.Owner = owner;
+            this.OwnerId = ownerId;
             this.Title = Title;
             this.Body = Body;
         }
